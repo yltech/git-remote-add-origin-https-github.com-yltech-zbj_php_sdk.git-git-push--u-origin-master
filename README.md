@@ -1,1 +1,5 @@
-# git-remote-add-origin-https-github.com-yltech-zbj_php_sdk.git-git-push--u-origin-master
+# zbj_php_sdk
+
+猪八戒开放平台通用API，用于开发者快速集成猪八戒平台接口
+
+定制化开发 联系QQ：1572309495

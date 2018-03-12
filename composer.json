@@ -1,0 +1,20 @@
+{
+    "name": "yltech/zbj_php_sdk",
+    "description": "猪八戒开放平台通用API",
+    "authors": [
+        {
+            "name": "Ansion",
+            "email": "1572309495@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": [
+            "lib"
+        ],
+		"files": ["./config.php"]
+    },
+    "license": "MIT"
+}
