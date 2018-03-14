@@ -105,7 +105,7 @@ class zbjOauth {
 	/**
 	 * 生成签名
 	 */
-	public function makeSign($data) {
+	private function makeSign($data) {
 		ksort($data);
 		$str = $this->config['app_secret'];
 		foreach ($data as $k => $v) {
@@ -279,6 +279,7 @@ class zbjApi {
 		$comParams = array(
 			'appKey' => $this->config['app_key'],
 			'accessToken' => $accessToken,
+			'method' => $method,
 			'format' => $this->format,
 			'locale' => $this->errLang,
 			'timestamp' => $this->getMillisecond(),
@@ -294,10 +295,10 @@ class zbjApi {
 		$signArray['method'] = $method;
 		$signArray['openid'] = $openid;
 		$signArray['v'] = $params['v'];
-		$zbjOauth = new zbjOauth($this->config);
-		$sign = $zbjOauth->makeSign($signArray);
+		$sign = $this->makeSign($signArray);
 		////////////////////////
 		$params['sign'] = $sign;
+		$zbjOauth = new zbjOauth($this->config);
 		if ($isPost) {
 			return $zbjOauth->post_request($this->ApiUrl, $params);
 		} else {
@@ -311,5 +312,18 @@ class zbjApi {
 	private function getMillisecond() { 
 		list($t1, $t2) = explode(' ', microtime()); 
 		return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000); 
-	} 
+	}
+	/**
+	 * 生成签名
+	 */
+	private function makeSign($data) {
+		ksort($data);
+		$str = $this->config['app_secret'];
+		foreach ($data as $k => $v) {
+			$str .= $k . $v;
+		}
+		$str .= $this->config['app_secret'];
+		$sign = strtoupper(sha1($str));
+		return $sign;
+	}
 }
